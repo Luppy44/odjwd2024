@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:fragment="head">
+	<title>분실물정보공유-오다주웠다</title>
+</th:block>
+<body id="index-body">
+	<th:block layout:fragment="header" th:include="@{/fragments/indexHeader}"></th:block>
+		<div id="index-content">
+			<div id="index-text">
+				<h3>분실물 정보 공유</h3>
+				<h1>오다 주웠다</h1>
+				<h3>I'll find your lost item</h3>
+				<div id="index-btn">
+					<input type="button" value="시작하기" class="btn btn-light" id="start-btn" onclick="location.href='/main'">
+				</div>
+			</div>
+				
+			<div id="index-img">
+				<img src="images/monky-index.png" alt="메인로고">
+			</div>
+		</div>
+</body>
+</html>

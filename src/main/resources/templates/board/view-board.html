@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:fragment="head">
+	<title>분실물정보공유-오다주웠다</title>
+</th:block>
+<body>
+<th:block layout:fragment="header" th:include="@{/fragments/mainHeader}"></th:block>
+<th:block layout:fragment="nav" th:include="@{/fragments/nav}"></th:block>
+<th:block layout:fragment="ad" th:include="@{/fragments/ad}"></th:block>
+<div class="container">
+	<!-- 게시판 view 부분 -->
+	<form role="form" th:object="${boardData}" method="post" class="add-form">
+		<input type="hidden" th:field="*{boardid}" class="form-control">
+		<input type="hidden" th:field="*{areacode}" class="form-control">
+		
+		<a class="btn btn-secondary" th:href="@{'/board/board-list/'+${boardData.areacode}}" id="toList">목록</a>
+		
+		<div id="view-container">
+			<div id="view-title">
+				<h4 th:text="${boardData.title}"></h4>				
+			</div>
+			<br>
+			<div id="view-info">
+				<p th:text="${boardData.name}"></p>
+				<p th:text="${boardData.timestamp}"></p>
+				<p th:text="'조회수 : '+${boardData.hit}"></p>
+			</div>
+			
+			<div id="profile">
+				<img src="/images/person.png" id="profile-img">
+			</div>
+			
+			<div id="view-content">
+			<hr>
+			<br>
+				<p th:text="${boardData.content}"></p>
+				<div class="view-img-div">
+					<img th:src="@{/upload-img/}+${boardData.filename}" th:if="${boardData.filename != null}" class="view-img">
+				</div>
+				<br>
+				<div th:id="${session.sId != boardData.id}? 'hid-complete-checkbox' : 'complete-checkbox'">
+					<input type="hidden" name="complete" th:value="${boardData.complete}" class="completeInput">
+					<a class="btn btn-secondary completeBtn" th:if="${boardData.complete == 0}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+										 id="complete-btn" th:href="@{'/board/complete/'+${boardData.boardid}}"
+										 th:onclick="if(!(confirm('정말 분실물을 찾셨나요?') )) return false">찾았어요</a>
+					<a class="btn btn-secondary cancelCompleteBtn" th:if="${boardData.complete == 1}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+										 id="cancel-complete-btn" th:href="@{'/board/cancleComplete/'+${boardData.boardid}}"
+										 th:onclick="if(!(confirm('취소하시겠습니까?') )) return false">찾았음(취소)</a>
+				</div>
+			<br>
+			</div>
+			
+		</div>
+		
+		<div id="button-view" align="center">
+			<input type="button" value="수정" class="btn btn-secondary" th:id="${session.sId != boardData.id}? 'hid-update-board-btn' : ''"
+																	   th:onclick="|location.href='@{'/board/updateBoard/'+${boardData.boardid}}'|">
+            <a class="btn btn-secondary" th:id="${session.sId != boardData.id}? 'hid-delete-board-btn' : ''" th:href="@{'/board/deleteBoard/'+${boardData.boardid}+'/'+${boardData.areacode}}"
+            														   th:onclick="if(!(confirm('정말 삭제하시겠습니까 ?') )) return false">삭제</a>
+		</div>	
+	</form>
+	<br>
+	<!-- 댓글 작성 부분 -->
+	<div id="reply-title">
+		<p>댓글</p>
+	</div>
+	<form th:object="${replyData}" action="/board/reply" method="post" class="add-form" th:id="${session.sId != null}? '' : 'hid-reply-form'">
+		<div class="input-group input-group-sm mb-3">
+			<span class="input-group-text" id="inputGroup-sizing-sm" th:text="${session.sId}"></span>
+			<input type="hidden" name="id" th:value="${session.sId}" class="form-control">
+			<input type="hidden" name="boardid" th:value="${boardid}" class="form-control">
+			<input type="text" name="recontent" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+			<button type="submit" class="btn btn-secondary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">작성</button>
+		</div>
+	</form>
+	<hr>
+	<!-- 댓글 목록 부분 -->
+	<div th:each="rel : ${replyData}" id="reply-list">
+		<form th:object="${replyUpdateData}" action="/board/updateReply" method="post" class="input-group input-group-sm mb-3 reply-form">
+			<span class="input-group-text" id="inputGroup-sizing-sm" th:text="${rel.id}"></span>
+			<input type="hidden" name="id" th:value="${rel.id}" class="form-control">
+			<input type="hidden" name="replyid" th:value="${rel.replyid}" class="form-control">
+			<input type="hidden" name="boardid" th:value="${rel.boardid}" class="form-control">
+			<input type="text" name="recontent" th:value="${rel.recontent}" class="form-control replyInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="reply-content" readonly>
+			<input type="text" name="recontent" th:value="${rel.recontent}" class="form-control replyUpdateInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="reply-content2" style="display:none">
+			<button type="button" class="btn btn-secondary updateReplyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+															th:id="${session.sId != rel.id}? 'hid-update-reply-btn' : 'update-reply-btn'">수정</button>
+			<a class="btn btn-secondary deleteReplyBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+										 th:id="${session.sId != rel.id}? 'hid-delete-reply-btn' : 'delete-reply-btn'" 
+										 th:href="@{'/board/deleteReply/'+${rel.replyid}+'/'+${rel.boardid}}"
+									     th:onclick="if(!(confirm('정말 삭제하시겠습니까 ?') )) return false">삭제</a>	
+			
+			<button type="submit" class="btn btn-secondary updateSubmitBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; display:none;"
+								 id="up-submit-btn">확인</button>						     
+			<button type="button" class="btn btn-secondary cancelBtn" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; display:none;"
+															id="up-cancel-btn">취소</button>
+									     				
+		</form>
+	</div>
+</div>	
+</body>
+<script th:inline="javascript">
+/* 댓글 수정 삭제 이벤트 */
+	const replyInput = document.querySelectorAll('.replyInput');
+	const updateBtn = document.querySelectorAll('.updateReplyBtn');
+	const replyUpdateInput = document.querySelectorAll('.replyUpdateInput');
+	const updateReplyBtn = document.querySelectorAll('.updateReplyBtn');
+	const deleteReplyBtn = document.querySelectorAll('.deleteReplyBtn');
+	const updateSubmitBtn = document.querySelectorAll('.updateSubmitBtn');
+	const cancelBtn = document.querySelectorAll('.cancelBtn');
+	
+	//수정버튼 클릭시 이벤트
+	updateBtn.forEach((button, index) => {
+	    button.addEventListener("click", () => {   		    		
+	    	commentUpdate(button, index);    		
+	    })
+		});
+	
+	const commentUpdate = (button, index) => {
+		replyInput[index].disabled=true;
+		replyInput[index].style="display:none";
+		replyUpdateInput[index].style=false;
+		updateReplyBtn[index].style="display:none";
+		deleteReplyBtn[index].style="display:none";
+		updateSubmitBtn[index].style=false;
+		cancelBtn[index].style=false;
+	}
+	
+	//취소버튼 클릭시 이벤트
+	cancelBtn.forEach((button, index) => {
+	    button.addEventListener("click", () => {   		    		
+	    	commentCancel(button, index);    		
+	    })
+		});
+	
+	const commentCancel = (button, index) => {
+		replyInput[index].disabled=false;
+		replyInput[index].style=false;
+		replyUpdateInput[index].style="display:none";
+		updateReplyBtn[index].style=false;
+		deleteReplyBtn[index].style=false;
+		updateSubmitBtn[index].style="display:none";
+		cancelBtn[index].style="display:none";
+	}
+	
+</script>
+</html>

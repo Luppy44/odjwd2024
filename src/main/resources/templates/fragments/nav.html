@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div id="nav">
+ <ul class="menu">
+ 	  <li th:id="${session.sId != null}? '' : 'hid-nav-profile'">
+ 	  	<h4 th:text="'['+${session.sName}+']'+'님'" id="nav-profile"></h4>
+ 	  	<a th:href="@{'/members/update-member/'+${session.sId}}"><img src="/images/edit.png" id="nav-profile-img"></a>
+ 	  </li>
+      <li id="to-home">
+        <a href="/main" class="main-menu">⟁ HOME</a>
+      </li>
+      <li>
+        <a href="/board/add-board" class="main-menu" th:id="${session.sId != null}? '' : 'hid-add-board'">⟁ 글작성</a>
+      </li>
+      <br>
+      
+      <li>
+        <a href="#" class="main-menu">⟁ 부산 (#1)</a>
+        <ul class="sub-menu">
+          <li><a th:href="@{'/board/board-list/'+${'11'}}">⟁ 진구(#1)</a></li>
+          <li><a th:href="@{'/board/board-list/'+${'12'}}">⟁ 수영구(#2)</a></li>
+          <li><a th:href="@{'/board/board-list/'+${'13'}}">⟁ 해운대구(#3)</a></li>
+          <li><a th:href="@{'/board/board-list/'+${'14'}}">⟁ 동래구(#4)</a></li>
+          <li><a th:href="@{'/board/board-list/'+${'15'}}">⟁ 사상구(#5)</a></li>
+        </ul>
+      </li>
+      
+      <li>
+        <a href="#" class="main-menu">⟁ 서울 (#2)</a>
+        <ul class="sub-menu">
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+        </ul>
+      </li>
+      
+      <li>
+        <a href="#" class="main-menu">⟁ 대전 (#3)</a>
+        <ul class="sub-menu">
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+        </ul>
+      </li>
+      
+      <li>
+        <a href="#" class="main-menu">⟁ 대구 (#4)</a>
+        <ul class="sub-menu">
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+        </ul>
+      </li>
+      
+      <li>
+        <a href="#" class="main-menu">⟁ 광주 (#5)</a>
+        <ul class="sub-menu">
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+        </ul>
+      </li>
+      
+      <li>
+        <a href="#" class="main-menu">⟁ 제주 (#6)</a>
+        <ul class="sub-menu">
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+        </ul>
+      </li>
+      
+      <li>
+        <a href="#" class="main-menu">⟁ 창원 (#7)</a>
+        <ul class="sub-menu">
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+          <li><a href="#">준비중...</a></li>
+        </ul>
+      </li>
+    </ul>
+</div>
+</html>

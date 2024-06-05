@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:fragment="head">
+	<title>분실물정보공유-오다주웠다</title>
+</th:block>
+<body>
+<th:block layout:fragment="header" th:include="@{/fragments/mainHeader}"></th:block>
+<th:block layout:fragment="nav" th:include="@{/fragments/nav}"></th:block>
+<th:block layout:fragment="ad" th:include="@{/fragments/ad}"></th:block>
+<div class="container">
+	<div class="main-section">
+		<div class="section-title">
+			<h1>Grateful Store</h1>
+			<p>분실물을 잘보관해주신 감사한 업장입니다~</p>
+		</div>
+		
+		<div class="section-images">
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁ 타코락 부산 장산점</p>
+			</div>
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁타코락 부산 장산점</p>
+			</div>
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁타코락 부산 장산점</p>
+			</div>			
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁타코락 부산 장산점</p>
+			</div>			
+		</div>
+		
+		<div class="section-images">
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁타코락 부산 장산점</p>
+			</div>
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁타코락 부산 장산점</p>
+			</div>
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁타코락 부산 장산점</p>
+			</div>			
+			<div class="section-img">
+				<img src="/images/takorak.jpg">
+				<p>⟁타코락 부산 장산점</p>
+			</div>			
+		</div>	
+	</div>
+	
+	<hr>
+	
+	<div class="main-section">
+		<div class="section-title">
+			<h1>최신 글</h1>
+		</div>
+		<div class="board-form">
+			<table class="table table-hover" id="main-board-list">
+			  <thead>
+			    <tr>
+			      <th scope="col" width="5%">no</th>
+			      <th scope="col" width="50%">제 목</th>
+			      <th scope="col" width="15%">글쓴이</th>
+			      <th scope="col" width="20%">작성일</th>
+			      <th scope="col" width="10%">조회</th>
+			    </tr>
+			  </thead>
+		
+			  <tbody>
+			    <tr th:each="board:${boards}">
+			      <th th:text="${board.boardid}"></th>
+			      <td id="main-a-title">
+			      	  <a th:href="@{/board/view-board/{boardid} (boardid=${board.boardid})}" th:text="${board.title}"></a>
+			      	  <span th:text="'~('+${board.recnt}+')'" class="recnt" th:if="${board.recnt != 0}"></span>
+			      	  <img src="/images/complete.png" th:if="${board.complete == 1}">
+			      </td>
+			      <td th:text="${board.name}"></td>
+			      <td th:text="${board.timestamp}"></td>
+			      <td th:text="${board.hit}"></td>
+			    </tr>
+			  </tbody>
+		  	</table>
+		</div>
+	</div>
+</div>	
+</body>
+<th:block layout:fragment="footer" th:include="@{/fragments/footer}"></th:block>
+</html>

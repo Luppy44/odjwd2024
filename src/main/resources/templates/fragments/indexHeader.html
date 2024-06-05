@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="header">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Bootstrap CSS -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/css/style.css}" rel="stylesheet">
+	
+	<!-- javascript -->
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="/js/main.js"></script>
+</head>
+<body>
+	<div id="header-btn">
+		<a class="btn btn-light" th:href="@{/members/login}" th:id="${session.sId != null}? 'hid-login-btn' : 'login-btn'">login</a>
+		<a class="btn btn-light" th:href="@{/members/add-member}" th:id="${session.sId != null}? 'hid-join-btn' : 'join-btn'">join</a>
+		<a class="btn btn-light" th:href="@{/logout}" th:id="${session.sId != null}? 'logout-btn' : 'hid-logout-btn'">logout</a>
+	</div>
+	
+</body>
+</html>

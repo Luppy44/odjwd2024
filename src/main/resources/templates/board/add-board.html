@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:fragment="head">
+	<title>분실물정보공유-오다주웠다</title>
+</th:block>
+<body>
+<th:block layout:fragment="header" th:include="@{/fragments/mainHeader}"></th:block>
+<th:block layout:fragment="nav" th:include="@{/fragments/nav}"></th:block>
+<th:block layout:fragment="ad" th:include="@{/fragments/ad}"></th:block>
+<div class="container">
+	<h2 class="board-title" th:text="글작성"></h2>
+	<form role="form" action="/board/add-board" th:object="${boardData}" method="post" enctype="multipart/form-data" class="add-form">
+		
+		<input type="hidden" th:field="*{boardid}" class="form-control">
+		<input type="hidden" name="id" th:value="${session.sId}" class="form-control">
+		
+		<div class="input-group">
+			<span class="input-group-text">⦾ 성명</span>
+			<input type="text" name="name" th:value="${session.sName}" class="form-control" readonly>
+		</div>
+		 
+		<div class="input-group">
+			<span class="input-group-text">⦾ 지역</span>
+			<select name="areacode" class="form-control">
+				<option value="">---선택---</option>
+				<option value="11">부산 진구</option>
+				<option value="12">부산 수영구</option>
+				<option value="13">부산 해운대구</option>
+				<option value="14">부산 동래구</option>
+				<option value="15">부산 사상구</option>
+			</select>
+		</div>
+			<p class="validationError" th:if="${#fields.hasErrors('areacode')}" th:errors="*{areacode}">areacode Error</p>
+
+		<div class="input-group">
+		  	<span class="input-group-text">⦾ 제목</span>
+		  	<input type="text" th:field="*{title}" class="form-control" placeholder="최대 30자">
+		</div>
+			<p class="validationError" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title Error</p>
+		
+		<div class="input-group">
+		 	 <span class="input-group-text">⦾ 내용</span>
+		 	 <textarea class="form-control" th:field="*{content}" rows="18" maxlength="500" placeholder="최대 500자"></textarea>
+		</div>
+			<p class="validationError" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">content Error</p>
+		
+		<div class="input-group">
+		  	<span class="input-group-text">⦾ 파일</span>
+		  	<input type="file" name="file" multiple="multiple" class="form-control">
+		</div>
+		
+		<div id="add-board-btn">
+			<button type="submit" class="btn btn-secondary">작성완료</button>
+		</div>	
+	</form>
+</div>	
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block layout:fragment="head">
+	<title>분실물정보공유-오다주웠다</title>
+</th:block>
+<body>
+<th:block layout:fragment="header" th:include="@{/fragments/mainHeader}"></th:block>
+<th:block layout:fragment="nav" th:include="@{/fragments/nav}"></th:block>
+
+<div class="container">
+	<h2 class="board-title" th:text="로그인"></h2>
+ 		
+	<form role="form" action="/members/login" th:object="${loginData}" method="post" id="login-form">
+		<div id="login-info">
+			<div class="input-group">
+				<span class="input-group-text">⦾ Id</span>
+				<input type="text" th:field="*{id}" class="form-control">
+			</div> 
+				<p th:text="${idError}" class="login-error"></p>
+		
+			<div class="input-group" id="pwbox">
+			  	<span class="input-group-text">⦾ P/W</span>
+				<input type="password" th:field="*{password}" class="form-control" id="pw-input">
+				<img src="/images/on.png" alt="Toggle Password" class="password-toggle" id="pw-toggle" onclick="onoff()">
+			</div>
+				<p th:text="${pwError}" class="login-error"></p>
+		</div>
+		
+		<div id="login-button">
+			<button type="submit" class="btn btn-secondary">로그인</button>
+		</div>	
+	</form>
+</div>
+</body>
+</html>

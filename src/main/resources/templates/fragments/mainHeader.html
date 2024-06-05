@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="header">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Bootstrap CSS -->
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/css/style.css}" rel="stylesheet">
+	
+	<!-- javascript -->
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="/js/main.js"></script>
+</head>
+	<div id="main-header-content">
+		<a href="/main"><img src="/images/monky-main.png"></a>
+		<a href="/main"><img src="/images/logo-main.png"></a>
+		<div id="main-header-btn">
+			<a class="btn btn-light" th:href="@{/members/login}" th:id="${session.sId != null}? 'hidden-login-btn' : 'main-login-btn'">login</a>
+			<a class="btn btn-light" th:href="@{/members/add-member}" th:id="${session.sId != null}? 'hidden-join-btn' : 'main-join-btn'">join</a>
+			<a class="btn btn-light" th:href="@{/logout}" th:id="${session.sId != null}? 'main-logout-btn' : 'hidden-logout-btn'">logout</a>
+		</div>
+	</div>
+	<hr>
+</html>
